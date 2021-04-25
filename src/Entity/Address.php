@@ -39,9 +39,9 @@ class Address
     private $postalCode;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Company::class, inversedBy="addresses")
+     * @ORM\OneToOne(targetEntity=Version::class, mappedBy="address", cascade={"persist", "remove"})
      */
-    private $company;
+    private $version;
 
     public function getId(): ?int
     {
@@ -96,14 +96,19 @@ class Address
         return $this;
     }
 
-    public function getCompany(): ?Company
+    public function getVersion(): ?Version
     {
-        return $this->company;
+        return $this->version;
     }
 
-    public function setCompany(?Company $company): self
+    public function setVersion(Version $version): self
     {
-        $this->company = $company;
+        // set the owning side of the relation if necessary
+        if ($version->getAddress() !== $this) {
+            $version->setAddress($this);
+        }
+
+        $this->version = $version;
 
         return $this;
     }

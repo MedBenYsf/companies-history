@@ -1,7 +1,25 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello CompanyController!{% endblock %}
+{% block title %}Hello versionController!{% endblock %}
 
 {% block body %}
     <h1> Liste des sociétés </h1>
+    {% for version in versions %}
+        <div>
+            <h3> <a href="{{ path('version_show', {'id': version.id})}}">Nom: {{ version.name }}</a> <h3>
+            <h5> SIREN: {{ version.company.siren }}</h5>
+            <h5> Capital: {{ version.capital }}</h5>
+            <h5> Ville d'enregistrement: {{ version.registrationCity }}</h5>
+            <h5> Date d'enregistrement: {{ version.registrationDate|date('d/M/Y') }}</h5>
+            <div>
+                <h5>Adresse</h5>
+                <p>Numéro de voie: {{ version.address.channelNumber }}</p>
+                <p>Nom de voie: {{ version.address.channelName }}</p>
+                <p>Ville: {{ version.address.city }}</p>
+                <p>Code postal: {{ version.address.postalCode }}</p>
+            </div>
+            </ul>
+        </div>
+        <hr />
+    {% endfor %}
 {% endblock %}

@@ -4,7 +4,7 @@ namespace App\Entity;
 
 use App\Repository\VersionRepository;
 use Doctrine\ORM\Mapping as ORM;
-
+use Doctrine\Common\Collections\Collection;
 /**
  * @ORM\Entity(repositoryClass=VersionRepository::class)
  * @ORM\Table(name="versions")
@@ -43,6 +43,13 @@ class Version
      * @ORM\JoinColumn(nullable=false)
      */
     private $company;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Address::class, inversedBy="version", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $address;
+    
 
     public function getId(): ?int
     {
@@ -105,6 +112,18 @@ class Version
     public function setCompany(?Company $company): self
     {
         $this->company = $company;
+
+        return $this;
+    }
+
+    public function getAddress(): ?Address
+    {
+        return $this->address;
+    }
+
+    public function setAddress(Address $address): self
+    {
+        $this->address = $address;
 
         return $this;
     }

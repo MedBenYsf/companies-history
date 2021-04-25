@@ -24,14 +24,14 @@ class AppFixtures extends Fixture
            $manager->persist($legalForm);
 
            // create companies
-           for ($i = 0; $i < 10; $i++) {
+           for ($i = 0; $i < 5; $i++) {
                $company = new Company();
                $company->setSiren($faker->siret)
                         ->setLegalForm($legalForm);
                 $manager->persist($company);
 
                 // create versions
-                for ($j = 0; $j < mt_rand(5, 10); $j++) {
+                for ($j = 0; $j < mt_rand(1, 3); $j++) {
                     $version = new Version();
                     $version->setName($faker->company)
                             ->setRegistrationCity($faker->city)
@@ -41,15 +41,14 @@ class AppFixtures extends Fixture
                     $manager->persist($version);
 
                     // create addresses
-                    for ($k = 0; $k < mt_rand(1, 3); $k++) {
-                        $address = new Address();
-                        $address->setChannelNumber(mt_rand(1, 20))
-                                ->setChannelName($faker->streetName)
-                                ->setCity($faker->city)
-                                ->setPostalCode($faker->randomNumber(5))
-                                ->setCompany($company);
-                        $manager->persist($address);
-                    }
+                    $address = new Address();
+                    $address->setChannelNumber(mt_rand(1, 20))
+                            ->setChannelName($faker->streetName)
+                            ->setCity($faker->city)
+                            ->setPostalCode($faker->randomNumber(5))
+                            ->setVersion($version);
+                    $manager->persist($address);
+                    
                 }
            }
        }

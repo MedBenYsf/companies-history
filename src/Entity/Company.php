@@ -36,11 +36,6 @@ class Company
      */
     private $legalForm;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Address::class, mappedBy="company")
-     */
-    private $addresses;
-
     public function __construct()
     {
         $this->versions = new ArrayCollection();
@@ -102,36 +97,6 @@ class Company
     public function setLegalForm(?LegalForm $legalForm): self
     {
         $this->legalForm = $legalForm;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Address[]
-     */
-    public function getAddresses(): Collection
-    {
-        return $this->addresses;
-    }
-
-    public function addAddress(Address $address): self
-    {
-        if (!$this->addresses->contains($address)) {
-            $this->addresses[] = $address;
-            $address->setCompany($this);
-        }
-
-        return $this;
-    }
-
-    public function removeAddress(Address $address): self
-    {
-        if ($this->addresses->removeElement($address)) {
-            // set the owning side to null (unless already changed)
-            if ($address->getCompany() === $this) {
-                $address->setCompany(null);
-            }
-        }
 
         return $this;
     }

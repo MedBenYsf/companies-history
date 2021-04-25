@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CompanyController!{% endblock %}
+
+{% block body %}
+   <div>
+        <a href="{{ path('version_index')}}">Liste de sociétés</a>
+        <a href="{{ path('version_edit', {'id': version.id})}}">Modifier</a>
+        <h2>{{ version.name }}
+            <label for="inputDate">Choisissez une date</label>
+            <input type="datetime-local" name="inputDate" id="inputDate" />
+        <h2>
+        <h5> SIREN: {{ version.company.siren }}</h5>
+        <h5> Capital: {{ version.capital }}</h5>
+        <h5> Ville d'enregistrement: {{ version.registrationCity }}</h5>
+        <h5> Date d'enregistrement: {{ version.registrationDate|date('d/M/Y') }}</h5>
+        <div>
+            <h5>Adresse</h5>
+            <p>Numéro de voie: {{ version.address.channelNumber }}
+            </p>
+            <p>Nom de voie: {{ version.address.channelName }}</p>
+            <p>Ville: {{ version.address.city }}</p>
+            <p>Code postal: {{ version.address.postalCode }}</p>
+        </div>
+        </ul>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(function() {
+            $('#inputDate').change(function(event) {
+                let dateInput = event.target.value;
+                //TODO call action to return version with registrationDate === dateInput
+            })
+        })
+    </script>
+{% endblock %}

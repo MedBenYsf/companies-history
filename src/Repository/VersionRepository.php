@@ -19,6 +19,17 @@ class VersionRepository extends ServiceEntityRepository
         parent::__construct($registry, Version::class);
     }
 
+    public function getLastVersionsCompanies()
+    {
+        return $this->createQueryBuilder('v')
+            ->join('v.company', 'c')
+            //->groupBy('c.siren')
+            ->orderBy('v.registrationDate', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     // /**
     //  * @return Version[] Returns an array of Version objects
     //  */
